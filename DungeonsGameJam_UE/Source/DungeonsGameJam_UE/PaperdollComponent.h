@@ -20,9 +20,20 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class ADungeonCharacter* Character;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class ADungeonWeapon* CurrentWeapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<ADungeonWeapon> StartingWeapon;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UFUNCTION()
+	void SpawnWeapon(TSubclassOf<ADungeonWeapon> WeaponToSpawn);
 		
 };
