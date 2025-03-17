@@ -3,6 +3,7 @@
 
 #include "DungeonCharacter.h"
 #include "HealthComponent.h"
+#include "PaperdollComponent.h"
 
 // Sets default values
 ADungeonCharacter::ADungeonCharacter()
@@ -11,6 +12,7 @@ ADungeonCharacter::ADungeonCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
+	PaperdollComponent = CreateDefaultSubobject<UPaperdollComponent>(TEXT("Paperdoll Component"));
 }
 
 // Called when the game starts or when spawned

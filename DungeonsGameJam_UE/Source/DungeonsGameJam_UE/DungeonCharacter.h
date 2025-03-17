@@ -22,6 +22,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class UHealthComponent* HealthComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	class UPaperdollComponent* PaperdollComponent;
+
 
 public:	
 	// Called every frame
