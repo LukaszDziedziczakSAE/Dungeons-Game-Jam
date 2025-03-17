@@ -20,9 +20,25 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float CurrentHealth;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	float MaxHealth;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	UFUNCTION(BlueprintCallable)
+	void TakeDamage(float Amount);
+
+	UFUNCTION(BlueprintCallable)
+	void Heal(float Amount);
+
+	UFUNCTION(BlueprintPure)
+	bool IsAlive() { return CurrentHealth > 0; }
+
+	UFUNCTION(BlueprintPure)
+	float GetPercentage() { return CurrentHealth / MaxHealth; }
 };

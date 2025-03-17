@@ -19,7 +19,7 @@ void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	CurrentHealth = MaxHealth;
 	
 }
 
@@ -30,5 +30,15 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UHealthComponent::TakeDamage(float Amount)
+{
+	CurrentHealth = FMath::Clamp(CurrentHealth - Amount, 0, MaxHealth);
+}
+
+void UHealthComponent::Heal(float Amount)
+{
+	CurrentHealth = FMath::Clamp(CurrentHealth + Amount, 0, MaxHealth);
 }
 

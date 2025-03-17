@@ -23,5 +23,18 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class USpringArmComponent* SpringArmComp;
-	
+
+
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	FVector Movement;
+
+	UPROPERTY(BlueprintReadOnly, VisibleInstanceOnly)
+	float TargetRotation;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+	float RotationRate;
 };

@@ -53,6 +53,13 @@ void ADungeonPlayerController::Move(const FInputActionValue& Value)
 {
 	if (PlayerCharacter != nullptr)
 	{
+		if (Value.Get<FVector2D>().Length() > 0)
+		{
+			PlayerCharacter->TargetRotation = (FMath::Atan2(-Value.Get<FVector2D>().Y, Value.Get<FVector2D>().X)) * (180 / PI);
+			//PlayerCharacter->SetActorRotation(FQuat::MakeFromEuler(FVector{ 0.0f, 0.0f, TargetRotation }));
+		}
+
+		
 		FRotator CharacterRotation = PlayerCharacter->GetControlRotation();
 
 		PlayerCharacter->AddMovementInput(
