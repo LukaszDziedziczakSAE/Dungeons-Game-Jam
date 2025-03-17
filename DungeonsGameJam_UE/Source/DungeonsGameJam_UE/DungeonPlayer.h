@@ -13,5 +13,15 @@ UCLASS()
 class DUNGEONSGAMEJAM_UE_API ADungeonPlayer : public ADungeonCharacter
 {
 	GENERATED_BODY()
+
+public:
+	ADungeonPlayer();
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UCameraComponent* CameraComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class USpringArmComponent* SpringArmComp;
 	
 };
