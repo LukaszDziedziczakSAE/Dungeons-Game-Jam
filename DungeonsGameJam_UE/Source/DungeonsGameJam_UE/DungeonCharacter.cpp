@@ -4,6 +4,7 @@
 #include "DungeonCharacter.h"
 #include "HealthComponent.h"
 #include "PaperdollComponent.h"
+#include "DungeonWeapon.h"
 
 // Sets default values
 ADungeonCharacter::ADungeonCharacter()
@@ -34,5 +35,14 @@ void ADungeonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ADungeonCharacter::Attack()
+{
+	if (PaperdollComponent == nullptr) return;
+
+	if (PaperdollComponent->GetCurrentWeapon() == nullptr) return;
+
+	PaperdollComponent->GetCurrentWeapon()->Attack();
 }
 

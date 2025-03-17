@@ -36,4 +36,6 @@ public:
 	UFUNCTION()
 	void SpawnWeapon(TSubclassOf<ADungeonWeapon> WeaponToSpawn);
 		
+	UFUNCTION(BlueprintPure)
+	ADungeonWeapon* GetCurrentWeapon() { return CurrentWeapon; }
 };

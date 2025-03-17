@@ -37,4 +37,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FQuat PlayerRelativeRotation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimMontage* AttackMontage;
+
+public:
+
+	UFUNCTION(BlueprintCallable)
+	void Attack();
 };

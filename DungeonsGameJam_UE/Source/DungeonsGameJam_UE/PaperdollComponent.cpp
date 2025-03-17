@@ -47,12 +47,10 @@ void UPaperdollComponent::SpawnWeapon(TSubclassOf<ADungeonWeapon> WeaponToSpawn)
 			//CurrentWeapon->AttachToActor(Character, FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("RightHand"));
 			CurrentWeapon->AttachToComponent(Character->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("RightHand"));
 			CurrentWeapon->SetPlayerRelatives();
+			CurrentWeapon->SetOwner(Character);
 		}
 
 		else
-		{
 			UE_LOG(LogTemp, Error, TEXT("Failed to spawn weapon"));
-
-		}
 	}
 }

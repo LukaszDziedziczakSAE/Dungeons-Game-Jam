@@ -41,6 +41,7 @@ void ADungeonPlayerController::SetupInputComponent()
 	if (Input != nullptr)
 	{
 		Input->BindAction(IA_Move, ETriggerEvent::Triggered, this, &ADungeonPlayerController::Move);
+		Input->BindAction(IA_Attack, ETriggerEvent::Triggered, this, &ADungeonPlayerController::Attack);
 	}
 
 	else
@@ -69,5 +70,13 @@ void ADungeonPlayerController::Move(const FInputActionValue& Value)
 		PlayerCharacter->AddMovementInput(
 			UKismetMathLibrary::GetRightVector(FRotator{ 0.0f, CharacterRotation.Yaw, CharacterRotation.Roll }),
 			Value.Get<FVector2D>().X);
+	}
+}
+
+void ADungeonPlayerController::Attack(const FInputActionValue& Value)
+{
+	if (PlayerCharacter != nullptr)
+	{
+		PlayerCharacter->Attack();
 	}
 }

@@ -3,6 +3,7 @@
 
 #include "DungeonWeapon.h"
 #include "Components/BoxComponent.h"
+#include "DungeonCharacter.h"
 
 ADungeonWeapon::ADungeonWeapon()
 {
@@ -29,4 +30,13 @@ void ADungeonWeapon::WeaponEdgeActivate()
 void ADungeonWeapon::WeaponEdgeDeactivate()
 {
 	WeaponEdge->SetCollisionProfileName(TEXT("NoCollision"));
+}
+
+void ADungeonWeapon::Attack()
+{
+	ADungeonCharacter* DungeonCharacter = Cast<ADungeonCharacter>(GetOwner());
+	if (AttackMontage != nullptr && DungeonCharacter != nullptr)
+	{
+		DungeonCharacter->PlayAnimMontage(AttackMontage);
+	}
 }

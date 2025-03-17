@@ -27,14 +27,14 @@ protected:
 	class UInputAction* IA_Move;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UInputAction* IA_Look;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UInputAction* IA_Inventory;
+	UInputAction* IA_Attack;
 
 	UFUNCTION()
 	virtual void SetupInputComponent() override;
 
 	UFUNCTION()
 	void Move(const FInputActionValue& Value);
+
+	UFUNCTION()
+	void Attack(const FInputActionValue& Value);
 };
