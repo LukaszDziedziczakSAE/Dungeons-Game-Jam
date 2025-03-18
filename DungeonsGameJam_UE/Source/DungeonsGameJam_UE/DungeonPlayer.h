@@ -24,6 +24,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class USpringArmComponent* SpringArmComp;
 
+	virtual void DestroyCharacter() override;
+
 
 public:
 	// Called every frame

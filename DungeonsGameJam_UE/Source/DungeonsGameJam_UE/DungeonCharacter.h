@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "DungeonCharacter.generated.h"
 
+
 UCLASS()
 class DUNGEONSGAMEJAM_UE_API ADungeonCharacter : public ACharacter
 {
@@ -42,6 +43,12 @@ protected:
 	UFUNCTION()
 	void MontageCompelete();
 
+	UFUNCTION()
+	virtual void DestroyCharacter();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	class UNiagaraComponent* BloodEffect;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -69,4 +76,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void PlayDeathMontage();
+
+	UFUNCTION(BlueprintPure)
+	bool IsBusy() { return isAttacking || isPlayingMontage; }
 };

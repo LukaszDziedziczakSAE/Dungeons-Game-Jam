@@ -4,6 +4,7 @@
 #include "DungeonPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 ADungeonPlayer::ADungeonPlayer()
 {
@@ -15,6 +16,12 @@ ADungeonPlayer::ADungeonPlayer()
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera Component"));
 	CameraComponent->SetupAttachment(SpringArmComp);
     //CameraComponent->AttachToComponent(SpringArmComp, FAttachmentTransformRules::KeepRelativeTransform);
+}
+
+void ADungeonPlayer::DestroyCharacter()
+{
+	Super::DestroyCharacter();
+	UGameplayStatics::OpenLevel(GetWorld(), FName{ *GetWorld()->GetMapName() });
 }
 
 void ADungeonPlayer::Tick(float DeltaTime)

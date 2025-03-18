@@ -51,7 +51,7 @@ void ADungeonWeapon::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AA
 float ADungeonWeapon::Attack()
 {
 	ADungeonCharacter* DungeonCharacter = Cast<ADungeonCharacter>(GetOwner());
-	if (AttackMontage != nullptr && DungeonCharacter != nullptr)
+	if (AttackMontage != nullptr && DungeonCharacter != nullptr && DungeonCharacter->IsAlive())
 	{
 		return DungeonCharacter->PlayAnimMontage(AttackMontage);
 	}

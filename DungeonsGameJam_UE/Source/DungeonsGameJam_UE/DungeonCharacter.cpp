@@ -5,6 +5,8 @@
 #include "HealthComponent.h"
 #include "PaperdollComponent.h"
 #include "DungeonWeapon.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 // Sets default values
 ADungeonCharacter::ADungeonCharacter()
@@ -14,6 +16,9 @@ ADungeonCharacter::ADungeonCharacter()
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 	PaperdollComponent = CreateDefaultSubobject<UPaperdollComponent>(TEXT("Paperdoll Component"));
+	BloodEffect = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Blood Effect"));
+	BloodEffect->bAutoActivate = false;
+	BloodEffect->SetupAttachment(GetMesh(), TEXT("BloodEffect"));
 }
 
 // Called when the game starts or when spawned
@@ -26,6 +31,12 @@ void ADungeonCharacter::BeginPlay()
 void ADungeonCharacter::MontageCompelete()
 {
 	isPlayingMontage = false;
+}
+
+void ADungeonCharacter::DestroyCharacter()
+{
+	
+	Destroy();
 }
 
 // Called every frame
@@ -44,7 +55,7 @@ void ADungeonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void ADungeonCharacter::Attack()
 {
-	if (isAttacking || PaperdollComponent == nullptr || PaperdollComponent->GetCurrentWeapon() == nullptr) return;
+	if (IsBusy() || PaperdollComponent == nullptr || PaperdollComponent->GetCurrentWeapon() == nullptr) return;
 
 	float t =  PaperdollComponent->GetCurrentWeapon()->Attack();
 
@@ -59,6 +70,11 @@ void ADungeonCharacter::Attack()
 void ADungeonCharacter::GotHit(float DamageAmount)
 {
 	HealthComponent->TakeDamage(DamageAmount);
+
+	if (BloodEffect != nullptr)
+	{
+		BloodEffect->Activate(true);
+	}
 }
 
 bool ADungeonCharacter::IsAlive()
@@ -83,7 +99,15 @@ void ADungeonCharacter::PlayDeathMontage()
 {
 	if (DeathMontage == nullptr) return;
 
-	PlayAnimMontage(DeathMontage);
+	float t = PlayAnimMontage(DeathMontage);
+	if (t > 0)
+	{
+		FTimerHandle AttackTimer;
+		GetWorld()->GetTimerManager().SetTimer(AttackTimer, this, &ADungeonCharacter::DestroyCharacter, t * 0.8f, false);
+		isPlayingMontage = true;
+	}
+
+	if (PaperdollComponent != nullptr && PaperdollComponent->GetCurrentWeapon() != nullptr) PaperdollComponent->GetCurrentWeapon()->Destroy();
 }
 
 void ADungeonCharacter::AttackTimerComplete()

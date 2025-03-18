@@ -15,6 +15,8 @@ class DUNGEONSGAMEJAM_UE_API ADungeonPlayerController : public APlayerController
 	GENERATED_BODY()
 
 protected:
+	virtual void BeginPlay() override;
+
 	virtual void OnPossess(APawn* aPawn) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -29,6 +31,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputAction* IA_Attack;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UInputAction* IA_AttackMove;
+
 	UFUNCTION()
 	virtual void SetupInputComponent() override;
 
@@ -37,4 +42,7 @@ protected:
 
 	UFUNCTION()
 	void Attack(const FInputActionValue& Value);
+
+	UFUNCTION()
+	void AttackMove(const FInputActionValue& Value);
 };
