@@ -52,7 +52,7 @@ void ADungeonPlayerController::SetupInputComponent()
 
 void ADungeonPlayerController::Move(const FInputActionValue& Value)
 {
-	if (PlayerCharacter != nullptr)
+	if (PlayerCharacter != nullptr && !PlayerCharacter->IsAttacking())
 	{
 		if (Value.Get<FVector2D>().Length() > 0)
 		{

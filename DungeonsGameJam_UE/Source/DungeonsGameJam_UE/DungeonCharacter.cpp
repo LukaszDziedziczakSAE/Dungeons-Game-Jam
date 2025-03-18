@@ -23,6 +23,11 @@ void ADungeonCharacter::BeginPlay()
 	
 }
 
+void ADungeonCharacter::MontageCompelete()
+{
+	isPlayingMontage = false;
+}
+
 // Called every frame
 void ADungeonCharacter::Tick(float DeltaTime)
 {
@@ -39,10 +44,50 @@ void ADungeonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void ADungeonCharacter::Attack()
 {
-	if (PaperdollComponent == nullptr) return;
+	if (isAttacking || PaperdollComponent == nullptr || PaperdollComponent->GetCurrentWeapon() == nullptr) return;
 
-	if (PaperdollComponent->GetCurrentWeapon() == nullptr) return;
+	float t =  PaperdollComponent->GetCurrentWeapon()->Attack();
 
-	PaperdollComponent->GetCurrentWeapon()->Attack();
+	if (t > 0)
+	{
+		FTimerHandle AttackTimer;
+		GetWorld()->GetTimerManager().SetTimer(AttackTimer, this, &ADungeonCharacter::AttackTimerComplete, t * PaperdollComponent->GetCurrentWeapon()->GetCompletedPercentage(), false);
+		isAttacking = true;
+	}
+}
+
+void ADungeonCharacter::GotHit(float DamageAmount)
+{
+	HealthComponent->TakeDamage(DamageAmount);
+}
+
+bool ADungeonCharacter::IsAlive()
+{
+	return HealthComponent->IsAlive();
+}
+
+void ADungeonCharacter::PlayGotHitMontage()
+{
+	if (GotHitMontage == nullptr) return;
+
+	float t = PlayAnimMontage(GotHitMontage);
+	if (t > 0)
+	{
+		FTimerHandle AttackTimer;
+		GetWorld()->GetTimerManager().SetTimer(AttackTimer, this, &ADungeonCharacter::MontageCompelete, t , false);
+		isPlayingMontage = true;
+	}
+}
+
+void ADungeonCharacter::PlayDeathMontage()
+{
+	if (DeathMontage == nullptr) return;
+
+	PlayAnimMontage(DeathMontage);
+}
+
+void ADungeonCharacter::AttackTimerComplete()
+{
+	isAttacking = false;
 }
 

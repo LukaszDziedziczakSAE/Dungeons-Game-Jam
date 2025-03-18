@@ -21,10 +21,15 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class ADungeonCharacter* Character;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float CurrentHealth;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float MaxHealth;
+
+	
 
 public:	
 	// Called every frame

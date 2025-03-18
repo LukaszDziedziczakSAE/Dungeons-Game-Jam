@@ -25,6 +25,22 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class UPaperdollComponent* PaperdollComponent;
 
+	UFUNCTION()
+	void AttackTimerComplete();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool isAttacking;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimMontage* GotHitMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimMontage* DeathMontage;
+
+	bool isPlayingMontage;
+
+	UFUNCTION()
+	void MontageCompelete();
 
 public:	
 	// Called every frame
@@ -33,7 +49,24 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void Attack();
 
+	UFUNCTION()
+	bool IsAttacking() { return isAttacking; }
+
+	UFUNCTION(BlueprintCallable)
+	void GotHit(float DamageAmount);
+
+	UFUNCTION(BlueprintPure)
+	bool IsAlive();
+
+	UFUNCTION(BlueprintPure)
+	bool IsPlayingMontage() { return isPlayingMontage; }
+
+	UFUNCTION(BlueprintCallable)
+	void PlayGotHitMontage();
+
+	UFUNCTION(BlueprintCallable)
+	void PlayDeathMontage();
 };

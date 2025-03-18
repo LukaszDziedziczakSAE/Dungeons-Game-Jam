@@ -2,6 +2,7 @@
 
 
 #include "HealthComponent.h"
+#include "DungeonCharacter.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -20,7 +21,7 @@ void UHealthComponent::BeginPlay()
 	Super::BeginPlay();
 
 	CurrentHealth = MaxHealth;
-	
+	Character = Cast<ADungeonCharacter>(GetOwner());
 }
 
 
@@ -34,7 +35,14 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UHealthComponent::TakeDamage(float Amount)
 {
+	if (CurrentHealth <= 0) return;
+
 	CurrentHealth = FMath::Clamp(CurrentHealth - Amount, 0, MaxHealth);
+
+	if (IsAlive())
+		Character->PlayGotHitMontage();
+	else
+		Character->PlayDeathMontage();
 }
 
 void UHealthComponent::Heal(float Amount)
